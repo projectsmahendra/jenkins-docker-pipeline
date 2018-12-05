@@ -55,11 +55,12 @@ pipeline {
     		    '''
             }			    	
         }
-        
         post {
-        		always {
-            			archiveArtifacts artifacts: '*.jar', fingerprint: true
-        		}
+        	always {
+            	archiveArtifacts artifacts: '*.jar', 
+                fingerprint: true,
+                onlyIfSuccessful: false
+        	}
     	}
     }
 }
