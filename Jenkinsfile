@@ -51,23 +51,15 @@ pipeline {
                         ./gradlew clean build
     
                         cp build/libs/tactical-1.0-SNAPSHOT.jar .    
-                        zip -r tactical.zip tactical-1.0-SNAPSHOT.jar Procfile run.sh
-                        echo "tactical run .................................................................."    
-                        nohup java -jar -Dlog_file=/tmp tactical-1.0-SNAPSHOT.jar --spring.profiles.active=dev --spring.config.location=config/application-dev.yml >> tactical.log &   
-                        sleep 45s
-            
-                        echo "run tactical acceptance test ............................................................."
-                        cd tactical-acceptance-test
-                        ./gradlew clean cucumber >> tactical_acceptance_test.log 
-                        
-                        cd -
-     
-                        echo "run performance test..........................................................."
-                        cd performance-test-suite
-                        mvn clean install
-                        cd -
+                        zip -r tactical.zip tactical-1.0-SNAPSHOT.jar Procfile run.sh                        
     		    '''
-            }
+            }			    	
         }
+        
+        post {
+        		always {
+            			archiveArtifacts artifacts: '*.jar', fingerprint: true
+        		}
+    	}
     }
 }
