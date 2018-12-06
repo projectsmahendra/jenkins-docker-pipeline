@@ -1,10 +1,6 @@
 pipeline {
     agent {
-        docker { 
-            image 'alpine:3.6' 
-            args '-u root:root'
-		
-        }
+       label 'ec2jenkins'
     }
     
     stages {
